@@ -2,7 +2,7 @@ const Workout = require('../models/workoutModel');
 const mongoose = require('mongoose');
 
 const getWorkouts = async (req, res) => {
-    const workouts = await Workout.find().sort({createdAt: -1});
+    const workouts = await Workout.find().populate('exercises').sort({createdAt: -1});
     res.status(200).json(workouts);
 }
 
@@ -13,7 +13,7 @@ const getWorkout = async (req, res) => {
         return res.status(404).json({error: 'Document not found'});
     }
 
-    const workout = await Workout.findById(id);
+    const workout = await Workout.findById(id).populate('exercises');
 
     if (!workout) {
         return res.status(404).json({error: 'Document not found'});

@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro';
-import "@fontsource/lato/400.css";
-import "@fontsource/lato/700.css";
-import "@fontsource/lato/900.css";
+
 import variables from './variables';
 
 const GlobalStyle = createGlobalStyle`
@@ -9,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
 
     html {
         box-sizing: border-box;
-        font-family: 'Lato', sans-serif;
+        font-family: var(--font-sans);
         color: var(--darkgrey);
     }
 
@@ -64,10 +62,12 @@ const GlobalStyle = createGlobalStyle`
         border: 0;
         cursor: pointer;
         font-family: inherit;
-        border-radius: var(--border-radius-pill);
-        font-size: var(--font-size-sm);
+        border-radius: var(--border-radius-subtle);
+        font-size: var(--font-size-base);
         font-weight: 700;
         padding: var(--spacing-xs) var(--spacing-sm);
+        background-color: var(--black);
+        color: var(--white);
 
         &:hover, &:focus {
             outline: 0;
@@ -96,6 +96,12 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         margin: 0;
         list-style: none;
+    }
+
+    input {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-base);
+        font-family: var(--font-sans);
     }
 
     #root {

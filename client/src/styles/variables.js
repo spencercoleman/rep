@@ -1,4 +1,7 @@
 import { css } from 'styled-components/macro';
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
+import "@fontsource/lato/900.css";
 
 const variables = css`
     :root {
@@ -8,6 +11,8 @@ const variables = css`
         --green: #00855B;
         --lightgrey: #f8f8f8;
         --white: #fff;
+
+        --font-sans: 'Lato', sans-serif;
         
         --font-size-xxxl: 3.05rem;
         --font-size-xxl: 2.44rem;

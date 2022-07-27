@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import "@testing-library/jest-dom";
 import WorkoutsList from '../WorkoutsList';
 
-describe('Workout Details component', () => {
+describe('Workout list component', () => {
     const seedWorkouts = [{
         _id: 'workoutOne',
         title: 'Punch Training',

@@ -3,10 +3,10 @@ import { IoHomeOutline, IoBodyOutline, IoBarbellOutline } from 'react-icons/io5'
 import styled from "styled-components/macro";
 
 const StyledNav = styled.nav`
-    background-color: var(--purple);
+    background-color: var(--black);
     color: var(--white);
     text-align: center;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-md);
     position: fixed;
     bottom: 0;
     z-index: 10;
@@ -23,7 +23,7 @@ const StyledNav = styled.nav`
 
     ul {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
 
         @media (min-width: 768px) {
             flex-direction: column;
@@ -43,11 +43,12 @@ const StyledNav = styled.nav`
     }
 
     .icon {
-        font-size: var(--font-size-xl);
+        font-size: var(--font-size-lg);
         margin: 0 auto;
+        margin-bottom: var(--spacing-xs);
 
         @media (min-width: 768px) {
-            margin-bottom: var(--spacing-xs);
+            margin-bottom: var(--spacing-xxs);
         }
     }
 `;

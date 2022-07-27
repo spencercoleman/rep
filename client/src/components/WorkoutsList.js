@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components/macro";
 import WorkoutDetails from "./WorkoutDetails";
 
@@ -9,13 +8,13 @@ const StyledWorkoutsList = styled.ul`
 `;
 
 const WorkoutsList = ({ workouts }) => {
-    const [unit, setUnit] = useState('kg');
-
     return (
         <StyledWorkoutsList>
-            {workouts && workouts.map((workout) => (
-                <WorkoutDetails key={workout._id} workout={workout} unit={unit} />
-            ))}
+            {workouts ? workouts.map((workout) => (
+                <WorkoutDetails key={workout._id} workout={workout} />
+            )) : (
+                <p>No workouts have been added.</p>
+            )}
         </StyledWorkoutsList>
     );
 }

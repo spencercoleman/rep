@@ -15,26 +15,37 @@ const StyledDetails = styled.li`
         font-size: var(--font-size-md);
     }
 
-    .exercise-name {
-        background-color: var(--purple);
-        color: var(--white);
-        font-weight: 700;
-        padding: var(--spacing-xxs) var(--spacing-xs);
-        border-radius: var(--border-radius-subtle);
-    }
-
     .exercise-table {
         border: none;
         border-spacing: var(--spacing-sm);
         border-radius: var(--border-radius-subtle);
-        background-color: rgba(0, 0, 0, 0.04);
+        background-color: var(--lightgrey);
         width: 100%;
         padding-bottom: var(--spacing-xs);
+        font-size: var(--font-size-sm);
+        table-layout: auto;
 
         th {
             padding-bottom: var(--spacing-xs);
+            font-weight: 900;
+        }
+
+        td {
+            white-space: nowrap;
+        }
+
+        @media (min-width: 445px) {
+            table-layout: fixed;
         }
     }
+`;
+
+const StyledName = styled.span`
+    background-color: ${props => props.force === 'Push' ? 'var(--blue)' : 'var(--green)'};
+    color: var(--white);
+    font-weight: 700;
+    padding: var(--spacing-xxs) var(--spacing-xs);
+    border-radius: var(--border-radius-subtle);
 `;
 
 const WorkoutDetails = ({ workout }) => {
@@ -43,7 +54,7 @@ const WorkoutDetails = ({ workout }) => {
             <StyledCard>
                 <strong className="workout-title">{workout.title}</strong>
                 
-                {workout.notes.length > 0 && <p>{workout.notes}</p>}
+                {workout.notes && workout.notes.length > 0 && <p>{workout.notes}</p>}
                 
                 <div>
                     <table className="exercise-table">
@@ -59,7 +70,10 @@ const WorkoutDetails = ({ workout }) => {
                             {workout.exercises.map((exercise, i) => (
                                 <tr key={exercise._id}>
                                     <td>
-                                        <Link to={`/exercises/${exercise._id}`} className="exercise-name">{exercise.name}</Link></td>
+                                        <Link to={`/exercises/${exercise._id}`}>
+                                            <StyledName force={exercise.force}>{exercise.name}</StyledName>
+                                        </Link>
+                                    </td>
                                     <td>{workout.weights[i]}</td> 
                                     <td>{workout.sets[i]}</td>
                                     <td>{workout.reps[i]}</td>
@@ -68,7 +82,6 @@ const WorkoutDetails = ({ workout }) => {
                         </tbody>
                     </table>    
                 </div>
-                
             </StyledCard>
         </StyledDetails>
     )

@@ -17,13 +17,13 @@ const StyledSection = styled.section`
 
     .section-view-all {
         font-weight: 700;
-        color: var(--purple);
-        border: 2px solid var(--purple);
+        color: var(--black);
+        border: 2px solid var(--black);
         border-radius: var(--border-radius-pill);
         padding: 0.2rem var(--spacing-sm);
 
         &:hover, &:focus {
-            background-color: var(--purple);
+            background-color: var(--black);
             color: var(--white);
             text-decoration: none;
         }

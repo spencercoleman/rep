@@ -2,9 +2,12 @@ import { css } from 'styled-components/macro';
 
 const variables = css`
     :root {
-        --purple: #6600DB;
-        --white: #fff;
+        --black: #212121;
+        --blue: #005FDB;
         --darkgrey: #312f36;
+        --green: #00855B;
+        --lightgrey: #f8f8f8;
+        --white: #fff;
         
         --font-size-xxxl: 3.05rem;
         --font-size-xxl: 2.44rem;
@@ -16,6 +19,7 @@ const variables = css`
         --font-size-xs: 0.64rem;
         --font-size-xxs: 0.512rem;
         
+        --spacing-xxxl: 72px;
         --spacing-xxl: 64px;
         --spacing-xl: 32px;
         --spacing-lg: 24px;

@@ -29,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
         font-size: var(--font-size-base);
+        background-color: var(--lightgrey);
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -64,7 +65,6 @@ const GlobalStyle = createGlobalStyle`
         cursor: pointer;
         font-family: inherit;
         border-radius: var(--border-radius-pill);
-        background-color: rgba(0,0,0,.7);
         font-size: var(--font-size-sm);
         font-weight: 700;
         padding: var(--spacing-xs) var(--spacing-sm);
@@ -83,7 +83,7 @@ const GlobalStyle = createGlobalStyle`
     main {
         position: relative;
         flex-grow: 1;
-        padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xxl) var(--spacing-md);
+        padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xxxl) var(--spacing-md);
         max-width: var(--site-max-width);
 
         @media (min-width: 768px) {

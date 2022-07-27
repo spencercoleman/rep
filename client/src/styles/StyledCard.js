@@ -8,6 +8,7 @@ const StyledCard = styled.div`
     flex-direction: column;
     gap: var(--spacing-sm);
     overflow-x: auto;
+    background-color: var(--white);
 `;
 
 export default StyledCard;

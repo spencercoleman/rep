@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Section from '../components/Section';
+import Section from "../components/Section";
 import WorkoutsList from "../components/WorkoutsList";
 
-const Home = () => {
+const Workouts = () => {
     const [workouts, setWorkouts] = useState(null);
     
     // Will didplay user workouts
@@ -17,24 +17,15 @@ const Home = () => {
         }
         fetchWorkouts();
     }, []);
-    
+
     return (
         <>
-            <h1>Dashboard</h1>
-
-            <Section title="Recent Activity">
-                <p>Placeholder</p>
+            <h1>Your Workouts</h1>
+            <Section title="Most Recent">
+                <WorkoutsList workouts={workouts} />
             </Section>
-            {/* TODO: Add Activity chart */}
-
-            { workouts && (
-            <Section title="Your Workouts" viewAllLink="/workouts">
-                <WorkoutsList workouts={workouts.slice(0, 5)} />
-            </Section>
-            )}
-
         </>
     );
 }
 
-export default Home;
+export default Workouts;

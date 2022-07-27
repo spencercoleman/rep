@@ -2,7 +2,7 @@ import { css } from 'styled-components/macro';
 
 const variables = css`
     :root {
-        --purple: #8a25ff;
+        --purple: #6600DB;
         --white: #fff;
         --darkgrey: #312f36;
         
@@ -10,6 +10,7 @@ const variables = css`
         --font-size-xxl: 2.44rem;
         --font-size-xl: 1.95rem;
         --font-size-lg: 1.56rem;
+        --font-size-md: 1.1rem;
         --font-size-base: 16px;
         --font-size-sm: 0.8rem;
         --font-size-xs: 0.64rem;

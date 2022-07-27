@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { IoHomeOutline, IoBarbellOutline } from 'react-icons/io5';
+import { IoHomeOutline, IoBodyOutline, IoBarbellOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
 
 const StyledNav = styled.nav`
@@ -58,6 +58,9 @@ const Navbar = () => {
             <ul>
                 <li>
                     <NavLink to="/"><IoHomeOutline className="icon" />Home</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/workouts"><IoBodyOutline className="icon" />Workouts</NavLink>
                 </li>
                 <li>
                     <NavLink to="/exercises"><IoBarbellOutline className="icon" />Exercises</NavLink>

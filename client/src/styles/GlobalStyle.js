@@ -36,6 +36,12 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 900;
     }
 
+    h1 {
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
     p {
         margin: 0;
     }
@@ -77,10 +83,12 @@ const GlobalStyle = createGlobalStyle`
     main {
         position: relative;
         flex-grow: 1;
-        padding: var(--spacing-lg) var(--spacing-md);
+        padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xxl) var(--spacing-md);
+        max-width: var(--site-max-width);
 
         @media (min-width: 768px) {
             padding: var(--spacing-xl) var(--spacing-lg);
+            margin: 0 auto;
         }
     }
 

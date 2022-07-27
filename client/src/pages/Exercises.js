@@ -15,7 +15,6 @@ const StlyedSearch = styled.form`
 const Exercises = () => {
     const [exercises, setExercises] = useState(null);
 
-    // Will didplay user workouts
     useEffect(() => {
         const fetchExercises = async () => {
             const response = await fetch('/api/exercises');

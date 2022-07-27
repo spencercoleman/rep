@@ -32,6 +32,10 @@ const StyledDetails = styled.li`
 
         td {
             white-space: nowrap;
+
+            a:hover {
+                text-decoration: none;
+            }
         }
 
         @media (min-width: 445px) {

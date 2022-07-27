@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from 'react-router-dom'; 
 import "@testing-library/jest-dom";
 import ExercisesTable from '../ExercisesTable';

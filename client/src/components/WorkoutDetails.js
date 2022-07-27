@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { IoTimeOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
 import StyledCard from "../styles/StyledCard";
 
@@ -11,8 +12,29 @@ const StyledDetails = styled.li`
         margin-bottom: var(--spacing-sm);
     }
 
+    .workout-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+
     .workout-title {
         font-size: var(--font-size-md);
+        margin-right: auto;
+    }
+
+    .workout-date {
+        font-size: var(--font-size-sm);
+    }
+
+    .workout-duration {
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
+        font-weight: 700;
+        svg {
+            font-size: 1.1rem;
+        }
     }
 
     .exercise-table {
@@ -53,11 +75,27 @@ const StyledName = styled.span`
 `;
 
 const WorkoutDetails = ({ workout }) => {
+    function parseDurationToHoursAndMinutes(totalMinutes) {
+        const minutes = totalMinutes % 60;
+        const hours = Math.floor(totalMinutes / 60);
+    
+        return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}`;
+    }
+    
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
     return (
         <StyledDetails>
             <StyledCard>
-                <strong className="workout-title">{workout.title}</strong>
-                
+                <div className="workout-header">
+                    <strong className="workout-title">{workout.title}</strong>
+                    <span className="workout-date">{new Date(workout.createdAt).toLocaleString()}</span>
+                </div>
+
+                <div className="workout-duration"><IoTimeOutline />{parseDurationToHoursAndMinutes(workout.duration)}</div>
+
                 {workout.notes && workout.notes.length > 0 && <p>{workout.notes}</p>}
                 
                 <div>

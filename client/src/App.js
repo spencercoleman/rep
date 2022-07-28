@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -9,13 +10,17 @@ import Home from './pages/Home';
 import Workouts from "./pages/Workouts";
 import Exercises from "./pages/Exercises";
 import Exercise from "./pages/Exercise";
+import WorkoutForm from "./components/WorkoutForm";
 
 function App() {
+  const [showForm, setShowForm] = useState(false);
+  
   return (
     <>
       <GlobalStyle />
       <BrowserRouter>
-        <Navbar />
+        <Navbar showForm={showForm} setShowForm={setShowForm} />
+        {showForm && <WorkoutForm setShowForm={setShowForm} />}
         <main>
           <Routes>
             <Route path="/" element={<Home />} />

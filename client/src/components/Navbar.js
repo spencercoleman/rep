@@ -1,6 +1,7 @@
-import { NavLink } from "react-router-dom";
-import { IoHomeOutline, IoBodyOutline, IoBarbellOutline } from 'react-icons/io5';
+import { NavLink, useLocation } from "react-router-dom";
+import { IoHomeOutline, IoBodyOutline, IoBarbellOutline, IoAddOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
+import { useEffect } from "react";
 
 const StyledNav = styled.nav`
     background-color: var(--black);
@@ -12,6 +13,7 @@ const StyledNav = styled.nav`
     z-index: 10;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.16) 0px -2px 6px, rgba(0, 0, 0, 0.23) 0px -2px 6px;
+    font-size: var(--font-size-sm);
 
     @media (min-width: 768px) {
         padding: var(--spacing-xxl) var(--spacing-md);
@@ -35,7 +37,6 @@ const StyledNav = styled.nav`
     a {
         display: flex;
         flex-direction: column;
-        font-size: var(--font-size-sm);
     }
 
     .active {
@@ -51,9 +52,23 @@ const StyledNav = styled.nav`
             margin-bottom: var(--spacing-xxs);
         }
     }
+
+    .add-workout-button {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+    }
 `;
 
-const Navbar = () => {
+const Navbar = ({ showForm, setShowForm }) => {
+    let location = useLocation();
+
+    useEffect(() => {
+        if (showForm) {
+            setShowForm(false);
+        }
+    }, [location]);
+
     return (
         <StyledNav>
             <ul>
@@ -65,6 +80,12 @@ const Navbar = () => {
                 </li>
                 <li>
                     <NavLink to="/exercises"><IoBarbellOutline className="icon" />Exercises</NavLink>
+                </li>
+                <li>
+                    <div className="add-workout-button" onClick={() => setShowForm(!showForm)}>
+                        <IoAddOutline className="icon"/>
+                        Add Workout
+                    </div>
                 </li>
             </ul>
         </StyledNav>

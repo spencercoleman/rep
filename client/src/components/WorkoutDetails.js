@@ -44,12 +44,10 @@ const StyledDetails = styled.li`
         background-color: var(--lightgrey);
         width: 100%;
         padding-bottom: var(--spacing-xs);
-        font-size: var(--font-size-sm);
         table-layout: auto;
 
         th {
             padding-bottom: var(--spacing-xs);
-            font-weight: 900;
         }
 
         td {

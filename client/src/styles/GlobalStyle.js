@@ -98,7 +98,7 @@ const GlobalStyle = createGlobalStyle`
         list-style: none;
     }
 
-    input {
+    input, select {
         padding: var(--spacing-xs) var(--spacing-sm);
         font-size: var(--font-size-base);
         font-family: var(--font-sans);

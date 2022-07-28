@@ -29,7 +29,7 @@ const Exercises = () => {
 
     return (
         <>
-        <h1>Exercises</h1>
+            <h1>Exercises</h1>
             <Section title="All Exercises">
                 <div>
                     <StlyedSearch>

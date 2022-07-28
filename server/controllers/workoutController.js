@@ -23,10 +23,10 @@ const getWorkout = async (req, res) => {
 }
 
 const createWorkout = async (req, res) => {
-    const { title, exercises, weights, reps, sets, notes } = req.body;
+    const { title, notes, duration, exercises, weights, reps, sets } = req.body;
 
     try {
-        const workout = await Workout.create({title, exercises, weights, reps, sets, notes});
+        const workout = await Workout.create({title, notes, duration, exercises, weights, reps, sets});
         res.status(200).json(workout);
     }
     catch (error) {

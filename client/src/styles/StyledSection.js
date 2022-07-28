@@ -13,13 +13,14 @@ const StyledSection = styled.section`
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+        gap: var(--spacing-sm);
     }
 
     .section-view-all {
         font-weight: 700;
         color: var(--black);
         border: 2px solid var(--black);
-        border-radius: var(--border-radius-pill);
+        border-radius: var(--border-radius-subtle);
         padding: 0.2rem var(--spacing-sm);
 
         &:hover, &:focus {

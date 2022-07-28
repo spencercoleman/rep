@@ -15,6 +15,10 @@ const StyledFormContainer = styled.div`
     z-index: 9;
     padding-bottom: var(--spacing-xxxl);
 
+    #duration {
+        max-width: 100px;
+    }
+
     .card-container {
         margin: var(--spacing-md);
         width: 100%;
@@ -28,6 +32,7 @@ const StyledFormContainer = styled.div`
     .form-header {
         display: flex;
         align-items: center;
+        margin-bottom: var(--spacing-xs);
         
         h2 {
             margin-right: auto;
@@ -77,12 +82,11 @@ const StyledForm = styled.form`
         width: fit-content;
     }
 
-    .add-exercise-button {
-        background: transparent;
-        color: var(--darkgrey);
+    .add-exercise {
         display: flex;
         align-items: center;
-        padding: 0;
+        font-weight: 700;
+        cursor: pointer;
 
         svg {
             font-size: 1.2rem;
@@ -93,13 +97,13 @@ const StyledForm = styled.form`
         margin-left: auto;
         padding: var(--spacing-xs) var(--spacing-md);
     }
-
 `;
 
 const WorkoutForm = ({ setShowForm }) => {
     const [exerciseList, setExercisesList] = useState(null);
     const [title, setTitle] = useState('');
     const [notes, setNotes] = useState('');
+    const [duration, setDuration] = useState(0);
     const [exercises, setExercises] = useState([
         {
             index: 0,
@@ -109,6 +113,7 @@ const WorkoutForm = ({ setShowForm }) => {
             reps: 0
         }
     ]);
+    const [error, setError] = useState(null);
 
     const addExercise = () => {
         setExercises([...exercises, {
@@ -130,9 +135,54 @@ const WorkoutForm = ({ setShowForm }) => {
         setExercises(updatedExercises);
     }
 
+    const parseExercises = () => {
+        // Parse exercises to extract weights, sets, and reps
+        const exerciseIds = [];
+        const weights = [];
+        const sets = [];
+        const reps = [];
+
+        exercises.forEach(exercise => {
+            exerciseIds.push(exercise.exerciseId);
+            weights.push(exercise.weight);
+            sets.push(exercise.sets);
+            reps.push(exercise.reps);
+        })
+
+        return {exerciseIds, weights, sets, reps};
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Simulated submit!');
+        const {exerciseIds, weights, sets, reps} = parseExercises();
+        const workout = {
+            title,
+            notes,
+            duration,
+            exercises: exerciseIds,
+            weights,
+            sets,
+            reps
+        }
+
+        console.log(workout);
+
+        const response = await fetch('/api/workouts', {
+            method: 'POST',
+            body: JSON.stringify(workout),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const json = await response.json();
+
+        if (!response.ok) {
+            setError(json.error);
+        }
+        else {
+            setError(null);
+            setShowForm(false);
+        }
     }
 
     const deleteExercise = (exerciseIndex) => {
@@ -141,7 +191,7 @@ const WorkoutForm = ({ setShowForm }) => {
     }
 
     useEffect(() => {
-        // Refactor this
+        // TODO: Refactor this
         const fetchExercises = async () => {
             const response = await fetch('/api/exercises');
             const data = await response.json();
@@ -182,6 +232,15 @@ const WorkoutForm = ({ setShowForm }) => {
                         value={notes}
                         placeholder="Add notes about your workout (optional)"
                     />
+                    <label htmlFor="duration"><strong>Duration (minutes)</strong></label>
+                    <input 
+                        id="duration"
+                        type="number"
+                        onChange={(e) => setDuration(e.target.value)}
+                        value={duration}
+                        min={0}
+                        placeholder={60}
+                    />
                     <div className="exercises-table">
                         <table>
                             <thead>
@@ -205,7 +264,8 @@ const WorkoutForm = ({ setShowForm }) => {
                             </tbody>
                         </table>
                     </div>
-                    <button className="add-exercise-button" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</button>
+                    <span className="add-exercise" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</span>
+                    {error && <p>{error}</p>}
                     <button className="submit-workout-button">Finish</button>
                 </StyledForm>
             </StyledCard>

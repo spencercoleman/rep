@@ -4,7 +4,7 @@ import styled from "styled-components/macro";
 
 const StyledInputsRow = styled.tr`
     input {
-        max-width: 50px;
+        max-width: 75px;
         text-align: center;
 
         @media (min-width: 768px) {

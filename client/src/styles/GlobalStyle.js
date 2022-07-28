@@ -38,6 +38,7 @@ const GlobalStyle = createGlobalStyle`
     h1 {
         margin-bottom: var(--spacing-md);
         padding-bottom: var(--spacing-sm);
+        font-size: 1.75em;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 

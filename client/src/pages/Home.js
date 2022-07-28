@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Section from '../components/Section';
 import WorkoutsList from "../components/WorkoutsList";
-import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
     const [workouts, setWorkouts] = useState(null);
@@ -30,7 +29,7 @@ const Home = () => {
 
             { workouts && (
             <Section title="Your Workouts" viewAllLink="/workouts">
-                <WorkoutsList workouts={workouts.slice(0, 5)} />
+                <WorkoutsList workouts={workouts.slice(0, 3)} />
             </Section>
             )}
         </>

@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { IoHomeOutline, IoBodyOutline, IoBarbellOutline, IoAddOutline } from 'react-icons/io5';
+import { IoHomeOutline, IoBodyOutline, IoBarbellOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
 import { useEffect } from "react";
 
@@ -80,12 +80,6 @@ const Navbar = ({ showForm, setShowForm }) => {
                 </li>
                 <li>
                     <NavLink to="/exercises"><IoBarbellOutline className="icon" />Exercises</NavLink>
-                </li>
-                <li>
-                    <div className="add-workout-button" onClick={() => setShowForm(!showForm)}>
-                        <IoAddOutline className="icon"/>
-                        Add Workout
-                    </div>
                 </li>
             </ul>
         </StyledNav>

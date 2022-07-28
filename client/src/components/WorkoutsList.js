@@ -10,7 +10,7 @@ const StyledWorkoutsList = styled.ul`
 const WorkoutsList = ({ workouts }) => {
     return (
         <StyledWorkoutsList>
-            {workouts ? workouts.map((workout) => (
+            {workouts && workouts.length > 0 ? workouts.map((workout) => (
                 <WorkoutDetails key={workout._id} workout={workout} />
             )) : (
                 <p>No workouts have been added.</p>

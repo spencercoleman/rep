@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   BrowserRouter,
   Routes,
-  Route,
+  Route
 } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
 import Navbar from "./components/Navbar";
@@ -11,6 +11,7 @@ import Workouts from "./pages/Workouts";
 import Exercises from "./pages/Exercises";
 import Exercise from "./pages/Exercise";
 import WorkoutForm from "./components/WorkoutForm";
+import AddWorkoutButton from "./components/AddWorkoutButton";
 
 function App() {
   const [showForm, setShowForm] = useState(false);
@@ -20,7 +21,11 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Navbar showForm={showForm} setShowForm={setShowForm} />
+        
         {showForm && <WorkoutForm setShowForm={setShowForm} />}
+        
+        <AddWorkoutButton showForm={showForm} setShowForm={setShowForm}/>
+
         <main>
           <Routes>
             <Route path="/" element={<Home />} />

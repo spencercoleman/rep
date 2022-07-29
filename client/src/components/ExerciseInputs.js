@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useExercisesContext } from '../hooks/useExercisesContext';
 import { IoCloseOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
 
@@ -42,49 +43,53 @@ const ExerciseInputs = ({ exerciseList, exercise, updateExercises, deleteExercis
         deleteExercise(exercise.index);
     }
 
-    return (   
-        <StyledInputsRow onBlur={handleChange}>
-            <td>
-                <select onChange={(e) => setExerciseId(e.target.value)}>
-                    <option style={{display: 'none'}}></option>
-                    {exerciseList.map(exercise => (
-                        <option key={exercise._id} value={exercise._id}>{exercise.name}</option>
-                    ))}
-                </select>
-            </td>
-            <td>
-                <input 
-                    type="number"
-                    onChange={(e) => setWeight(e.target.value)}
-                    value={weight}
-                    min={0}
-                    placeholder={50}
-                />
-            </td>
-            <td>
-                <input 
-                    type="number"
-                    onChange={(e) => setSets(e.target.value)}
-                    value={sets}
-                    min={0}
-                    placeholder={5}
-                />
-            </td>
-            <td>
-                <input 
-                    type="number"
-                    onChange={(e) => setReps(e.target.value)}
-                    value={reps}
-                    min={0}
-                    placeholder={10}
-                />
-            </td>
-            {exercise.index !== 0 && (
-                <td className="delete-icon">
-                    <IoCloseOutline onClick={() => handleDelete()} />
-                </td>
+    return (
+        <> 
+            {exerciseList && (
+                <StyledInputsRow onBlur={handleChange}>
+                    <td>
+                        <select onChange={(e) => setExerciseId(e.target.value)}>
+                            <option style={{display: 'none'}}></option>
+                            {exerciseList.map(exercise => (
+                                <option key={exercise._id} value={exercise._id}>{exercise.name}</option>
+                            ))}
+                        </select>
+                    </td>
+                    <td>
+                        <input 
+                            type="number"
+                            onChange={(e) => setWeight(e.target.value)}
+                            value={weight}
+                            min={0}
+                            placeholder={50}
+                        />
+                    </td>
+                    <td>
+                        <input 
+                            type="number"
+                            onChange={(e) => setSets(e.target.value)}
+                            value={sets}
+                            min={0}
+                            placeholder={5}
+                        />
+                    </td>
+                    <td>
+                        <input 
+                            type="number"
+                            onChange={(e) => setReps(e.target.value)}
+                            value={reps}
+                            min={0}
+                            placeholder={10}
+                        />
+                    </td>
+                    {exercise.index !== 0 && (
+                        <td className="delete-icon">
+                            <IoCloseOutline onClick={() => handleDelete()} />
+                        </td>
+                    )}
+                </StyledInputsRow>
             )}
-        </StyledInputsRow>
+        </>
     );
 }
 

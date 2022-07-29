@@ -4,6 +4,7 @@ import { IoAddOutline, IoCloseOutline } from 'react-icons/io5';
 import styled from 'styled-components/macro';
 import StyledCard from '../styles/StyledCard';
 import ExerciseInputs from './ExerciseInputs';
+import { useExercisesContext } from '../hooks/useExercisesContext';
 
 const StyledFormContainer = styled.div`
     position: fixed;
@@ -102,7 +103,7 @@ const StyledForm = styled.form`
 
 const WorkoutForm = ({ setShowForm }) => {
     const { fetchWorkouts } = useWorkoutsContext();
-    const [exerciseList, setExercisesList] = useState(null);
+    const { exerciseList } = useExercisesContext();
     const [title, setTitle] = useState('');
     const [notes, setNotes] = useState('');
     const [duration, setDuration] = useState(0);
@@ -194,19 +195,6 @@ const WorkoutForm = ({ setShowForm }) => {
     }
 
     useEffect(() => {
-        // TODO: Refactor this
-        const fetchExercises = async () => {
-            const response = await fetch('/api/exercises');
-            const data = await response.json();
-
-            if (response.ok) {
-                setExercisesList(data);
-            }
-        }
-        fetchExercises();
-    }, []);
-
-    useEffect(() => {
         // Prevent scrolling when active
         document.body.style.overflow = 'hidden';
 
@@ -255,10 +243,10 @@ const WorkoutForm = ({ setShowForm }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {exerciseList != null && exercises.map((exercise, i) => (
+                                {exercises.map((exercise, i) => (
                                     <ExerciseInputs 
                                         key={i} 
-                                        exerciseList={exerciseList} 
+                                        exerciseList={exerciseList}
                                         exercise={exercise} 
                                         updateExercises={updateExercises} 
                                         deleteExercise={deleteExercise}

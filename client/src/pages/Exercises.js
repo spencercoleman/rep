@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useExercisesContext } from "../hooks/useExercisesContext";
 import styled from "styled-components/macro";
 import Section from "../components/Section"
 import ExercisesTable from "../components/ExercisesTable"
@@ -13,19 +13,7 @@ const StlyedSearch = styled.form`
 `;
 
 const Exercises = () => {
-    const [exercises, setExercises] = useState(null);
-
-    useEffect(() => {
-        const fetchExercises = async () => {
-            const response = await fetch('/api/exercises');
-            const data = await response.json();
-
-            if (response.ok) {
-                setExercises(data);
-            }
-        }
-        fetchExercises();
-    }, []);
+    const {exerciseList} = useExercisesContext();
 
     return (
         <>
@@ -38,7 +26,7 @@ const Exercises = () => {
                     </StlyedSearch>
                 </div>
                 <StyledCard>
-                    <ExercisesTable exercises={exercises} />
+                    <ExercisesTable exercises={exerciseList} />
                 </StyledCard>
             </Section>
         </>

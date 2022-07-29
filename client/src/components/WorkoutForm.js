@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { IoAddOutline, IoCloseOutline } from 'react-icons/io5';
 import styled from 'styled-components/macro';
 import StyledCard from '../styles/StyledCard';
@@ -100,6 +101,7 @@ const StyledForm = styled.form`
 `;
 
 const WorkoutForm = ({ setShowForm }) => {
+    const { fetchWorkouts } = useWorkoutsContext();
     const [exerciseList, setExercisesList] = useState(null);
     const [title, setTitle] = useState('');
     const [notes, setNotes] = useState('');
@@ -154,6 +156,7 @@ const WorkoutForm = ({ setShowForm }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
         const {exerciseIds, weights, sets, reps} = parseExercises();
         const workout = {
             title,
@@ -164,8 +167,6 @@ const WorkoutForm = ({ setShowForm }) => {
             sets,
             reps
         }
-
-        console.log(workout);
 
         const response = await fetch('/api/workouts', {
             method: 'POST',
@@ -179,9 +180,11 @@ const WorkoutForm = ({ setShowForm }) => {
         if (!response.ok) {
             setError(json.error);
         }
-        else {
+
+        if (response.ok) {
             setError(null);
             setShowForm(false);
+            fetchWorkouts();
         }
     }
 

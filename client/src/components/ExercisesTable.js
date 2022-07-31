@@ -45,7 +45,7 @@ const ExercisesTable = ({ exercises }) => {
 
     return (
         <>
-            {exercises ? (
+            {exercises && exercises.length > 0 ? (
                 <StyledExerciseTable>
                     <thead>
                         <tr>

@@ -210,7 +210,7 @@ const WorkoutForm = ({ setShowForm }) => {
                     <h2>Add a new workout</h2>
                     <button className="close-button" onClick={() => setShowForm(false)}><IoCloseOutline /></button>
                 </div>
-                <StyledForm onSubmit={handleSubmit}>
+                <StyledForm onSubmit={handleSubmit} role="form">
                     <input 
                         type="text"
                         onChange={(e) => setTitle(e.target.value)}

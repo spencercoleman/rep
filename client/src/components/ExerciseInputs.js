@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useExercisesContext } from '../hooks/useExercisesContext';
 import { IoCloseOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
 
@@ -24,7 +23,7 @@ const StyledInputsRow = styled.tr`
 `;
 
 const ExerciseInputs = ({ exerciseList, exercise, updateExercises, deleteExercise }) => {
-    const [exerciseId, setExerciseId] = useState('');
+    const [exerciseId, setExerciseId] = useState(exercise.exerciseId ? exercise.exerciseId : '');
     const [weight, setWeight] = useState(exercise.weight);
     const [sets, setSets] = useState(exercise.sets);
     const [reps, setReps] = useState(exercise.reps);
@@ -48,7 +47,7 @@ const ExerciseInputs = ({ exerciseList, exercise, updateExercises, deleteExercis
             {exerciseList && (
                 <StyledInputsRow onBlur={handleChange}>
                     <td>
-                        <select onChange={(e) => setExerciseId(e.target.value)}>
+                        <select onChange={(e) => setExerciseId(e.target.value)} defaultValue={exercise.exerciseId}>
                             <option style={{display: 'none'}}></option>
                             {exerciseList.map(exercise => (
                                 <option key={exercise._id} value={exercise._id}>{exercise.name}</option>

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoTimeOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
 import StyledCard from "../styles/StyledCard";
+import EditWorkoutForm from './EditWorkoutForm';
 
 const StyledDetails = styled.li`
     div {
@@ -73,6 +75,8 @@ const StyledName = styled.span`
 `;
 
 const WorkoutDetails = ({ workout }) => {
+    const [isEditing, setIsEditing] = useState(false);
+
     function parseDurationToHoursAndMinutes(totalMinutes) {
         const minutes = totalMinutes % 60;
         const hours = Math.floor(totalMinutes / 60);
@@ -87,41 +91,54 @@ const WorkoutDetails = ({ workout }) => {
     return (
         <StyledDetails>
             <StyledCard>
-                <div className="workout-header">
-                    <strong className="workout-title">{workout.title}</strong>
-                    <span className="workout-date">{new Date(workout.createdAt).toLocaleString()}</span>
-                </div>
+                {isEditing ? (
+                    <>
+                        <EditWorkoutForm workout={workout} setIsEditing={setIsEditing} />
+                    </>
+                ) : (
+                    <>
+                        <div className="workout-header">
+                            <strong className="workout-title">{workout.title}</strong>
+                            <span className="workout-date">{new Date(workout.createdAt).toLocaleString()}</span>
+                        </div>
+                        
+                        <div>
+                            <button onClick={() => setIsEditing(!isEditing)}>Edit</button>
+                        </div>
 
-                <div className="workout-duration"><IoTimeOutline />{parseDurationToHoursAndMinutes(workout.duration)}</div>
+                        <div className="workout-duration"><IoTimeOutline />{parseDurationToHoursAndMinutes(workout.duration)}</div>
 
-                {workout.notes && workout.notes.length > 0 && <p>{workout.notes}</p>}
+                        {workout.notes && workout.notes.length > 0 && <p>{workout.notes}</p>}
+                        
+                        <div>
+                            <table className="exercise-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exercise</th>
+                                        <th>Weight</th>
+                                        <th>Sets</th>
+                                        <th>Reps</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {workout.exercises.map((exercise, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                <Link to={`/exercises/${exercise._id}`}>
+                                                    <StyledName force={exercise.force}>{exercise.name}</StyledName>
+                                                </Link>
+                                            </td>
+                                            <td>{workout.weights[index]}</td> 
+                                            <td>{workout.sets[index]}</td>
+                                            <td>{workout.reps[index]}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>    
+                        </div>
+                    </>
+                )}
                 
-                <div>
-                    <table className="exercise-table">
-                        <thead>
-                            <tr>
-                                <th>Exercise</th>
-                                <th>Weight</th>
-                                <th>Sets</th>
-                                <th>Reps</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {workout.exercises.map((exercise, i) => (
-                                <tr key={exercise._id}>
-                                    <td>
-                                        <Link to={`/exercises/${exercise._id}`}>
-                                            <StyledName force={exercise.force}>{exercise.name}</StyledName>
-                                        </Link>
-                                    </td>
-                                    <td>{workout.weights[i]}</td> 
-                                    <td>{workout.sets[i]}</td>
-                                    <td>{workout.reps[i]}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>    
-                </div>
             </StyledCard>
         </StyledDetails>
     )

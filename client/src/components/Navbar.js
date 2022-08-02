@@ -60,14 +60,12 @@ const StyledNav = styled.nav`
     }
 `;
 
-const Navbar = ({ showForm, setShowForm }) => {
+const Navbar = ({ setShowForm }) => {
     let location = useLocation();
 
     useEffect(() => {
-        if (showForm) {
-            setShowForm(false);
-        }
-    }, [location]);
+        setShowForm(false);
+    }, [location, setShowForm]);
 
     return (
         <StyledNav>

@@ -5,6 +5,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import styled from "styled-components/macro";
 import StyledCard from "../styles/StyledCard";
 import EditWorkoutForm from './EditWorkoutForm';
+import { useExercisesContext } from "../hooks/useExercisesContext";
 
 const StyledDetails = styled.li`
     div {
@@ -86,15 +87,27 @@ const StyledName = styled.span`
 
 const WorkoutDetails = ({ workout }) => {
     const [isEditing, setIsEditing] = useState(false);
+    const { exerciseList } = useExercisesContext();
 
-    function parseDurationToHoursAndMinutes(totalMinutes) {
+    //  Get exercise details from the exercise list context
+    const parseExercise = (exerciseId) => {
+        const exerciseData = exerciseList.find(exercise => exercise._id === exerciseId)
+
+        return {
+            name: exerciseData.name,
+            force: exerciseData.force,
+        }
+    }
+
+    // Convert workout duration (minutes) to HH:MM format
+    const parseDurationToHoursAndMinutes = (totalMinutes) => {
         const minutes = totalMinutes % 60;
         const hours = Math.floor(totalMinutes / 60);
     
         return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}`;
     }
     
-    function padTo2Digits(num) {
+    const padTo2Digits = (num) => {
         return num.toString().padStart(2, '0');
     }
 
@@ -118,32 +131,39 @@ const WorkoutDetails = ({ workout }) => {
 
                         {workout.notes && workout.notes.length > 0 && <p>{workout.notes}</p>}
                         
-                        <div>
-                            <table className="exercise-table">
-                                <thead>
-                                    <tr>
-                                        <th>Exercise</th>
-                                        <th>Weight</th>
-                                        <th>Sets</th>
-                                        <th>Reps</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {workout.exercises.map((exercise, index) => (
-                                        <tr key={index}>
-                                            <td>
-                                                <Link to={`/exercises/${exercise._id}`}>
-                                                    <StyledName force={exercise.force}>{exercise.name}</StyledName>
-                                                </Link>
-                                            </td>
-                                            <td>{workout.weights[index]}</td> 
-                                            <td>{workout.sets[index]}</td>
-                                            <td>{workout.reps[index]}</td>
+                        {exerciseList && exerciseList.length > 0 && (
+                            <div>
+                                <table className="exercise-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Exercise</th>
+                                            <th>Weight</th>
+                                            <th>Sets</th>
+                                            <th>Reps</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>    
-                        </div>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        {workout.exercises.map((exerciseId, index) => {
+                                            const exerciseData = parseExercise(exerciseId);
+    
+                                            return (
+                                                <tr key={index}>
+                                                    <td>
+                                                        <Link to={`/exercises/${exerciseId}`}>
+                                                            <StyledName force={exerciseData.force}>{exerciseData.name}</StyledName>
+                                                        </Link>
+                                                    </td>
+                                                    <td>{workout.weights[index]}</td> 
+                                                    <td>{workout.sets[index]}</td>
+                                                    <td>{workout.reps[index]}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>    
+                            </div>
+                        )}
                     </>
                 )}
                 

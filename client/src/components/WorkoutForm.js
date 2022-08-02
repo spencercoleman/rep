@@ -111,7 +111,7 @@ const StyledForm = styled.form`
 `;
 
 const WorkoutForm = ({ setShowForm }) => {
-    const { fetchWorkouts } = useWorkoutsContext();
+    const { dispatch } = useWorkoutsContext();
     const { exerciseList } = useExercisesContext();
     const [title, setTitle] = useState('');
     const [notes, setNotes] = useState('');
@@ -197,7 +197,7 @@ const WorkoutForm = ({ setShowForm }) => {
             setError(null);
             setShowForm(false);
             setErrorFields([]);
-            fetchWorkouts();
+            dispatch({ type: 'CREATE_WORKOUT', payload: json })
         }
     }
 

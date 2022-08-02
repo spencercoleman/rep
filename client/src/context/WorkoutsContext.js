@@ -1,25 +1,50 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useReducer, useEffect } from 'react';
 
 export const WorkoutsContext = createContext();
 
-export const WorkoutsProvider = ({ children }) => {
-    const [workouts, setWorkouts] = useState(null);
-
-    const fetchWorkouts = async () => {
-        const response = await fetch('/api/workouts');
-        const data = await response.json();
-
-        if (response.ok) {
-            setWorkouts(data);
-        }
+export const workoutsReducer = (state, action) => {
+    switch (action.type) {
+        case 'SET_WORKOUTS':
+            return {
+                workouts: action.payload
+            }
+        case 'CREATE_WORKOUT':
+            return {
+                workouts: [action.payload, ...state.workouts]
+            }
+        case 'EDIT_WORKOUT': 
+            return {
+                workouts: state.workouts.map(workout => workout._id === action.payload._id ? action.payload : workout)
+            }
+        case 'DELETE_WORKOUT':
+            return {
+                workouts: state.workouts.filter(workout => workout._id !== action.payload._id)
+            }
+        default:
+            return state
     }
+}
+
+export const WorkoutsProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(workoutsReducer, {
+        workouts: null
+    });
 
     useEffect(() => {
+        const fetchWorkouts = async () => {
+            const response = await fetch('/api/workouts');
+            const data = await response.json();
+    
+            if (response.ok) {
+                dispatch({type: 'SET_WORKOUTS', payload: data});
+            }
+        }
+
         fetchWorkouts();
     }, []);
 
     return (
-        <WorkoutsContext.Provider value={{workouts, fetchWorkouts}}>
+        <WorkoutsContext.Provider value={{...state, dispatch}}>
             {children}
         </WorkoutsContext.Provider>
     );

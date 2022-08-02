@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { IoCloseOutline, IoAddOutline, IoTrashOutline } from 'react-icons/io5';
 import styled from 'styled-components/macro';
@@ -128,7 +128,7 @@ const StyledForm = styled.form`
 `;
 
 const EditWorkoutForm = ({ workout, setIsEditing }) => {
-    const { fetchWorkouts } = useWorkoutsContext();
+    const { dispatch } = useWorkoutsContext();
     const { exerciseList } = useExercisesContext();
     const [title, setTitle] = useState(workout.title);
     const [notes, setNotes] = useState(workout.notes);
@@ -181,12 +181,12 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
     }
 
     // Grab exercise data, weights, sets, and reps to populate inputs
-    const getExerciseData = () => {
+    const getExerciseData = useCallback(() => {
         const exerciseData = [];
 
-        workout.exercises.forEach((exercise, index) => {
+        workout.exercises.forEach((exerciseId, index) => {
             const exerciseObj = {
-                exerciseId: exercise._id,
+                exerciseId: exerciseId,
                 index: index,
                 weight: workout.weights[index],
                 sets: workout.sets[index],
@@ -195,7 +195,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
             exerciseData.push(exerciseObj);
         });
         return exerciseData;
-    }
+    }, [workout.exercises, workout.weights, workout.sets, workout.reps]);
 
     const handleConfirm = (e) => {
         e.preventDefault();
@@ -223,7 +223,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
             setError(null);
             setIsEditing(false);
             setIsConfirming(false);
-            fetchWorkouts();
+            dispatch({ type: 'DELETE_WORKOUT', payload: json })
         }
     }
 
@@ -259,13 +259,14 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
             setError(null);
             setErrorFields([]);
             setIsEditing(false);
-            fetchWorkouts();
+            dispatch({ type: 'EDIT_WORKOUT', payload: json })
         }
     }
 
     useEffect(() => {
-        setExercises(getExerciseData());
-    }, [])
+        const exerciseData = getExerciseData();
+        setExercises(exerciseData);
+    }, [getExerciseData])
 
     return (
         <>

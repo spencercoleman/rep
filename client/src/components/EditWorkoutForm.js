@@ -116,6 +116,15 @@ const StyledForm = styled.form`
             margin-bottom: var(--spacing-md);
         }
     }
+
+    .error {
+        border: 1px solid var(--red);
+        transition: 0.2s ease-in;
+    }
+
+    .error-message {
+        color: var(--red);
+    }
 `;
 
 const EditWorkoutForm = ({ workout, setIsEditing }) => {
@@ -126,6 +135,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
     const [duration, setDuration] = useState(workout.duration);
     const [exercises, setExercises] = useState(null);
     const [error, setError] = useState(null);
+    const [errorFields, setErrorFields] = useState([]);
     const [isConfirming, setIsConfirming] = useState(false);
 
     const addExercise = () => {
@@ -202,10 +212,6 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
 
         const response = await fetch(`/api/workouts/${workout._id}`, {
             method: 'DELETE',
-            body: JSON.stringify(workout),
-            headers: {
-                'Content-Type': 'application/json'
-            }
         });
         const json = await response.json();
 
@@ -246,10 +252,12 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
 
         if (!response.ok) {
             setError(json.error);
+            setErrorFields(json.errorFields);
         }
 
         if (response.ok) {
             setError(null);
+            setErrorFields([]);
             setIsEditing(false);
             fetchWorkouts();
         }
@@ -265,6 +273,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
                 <button className="cancel-icon" onClick={handleCancel}><IoCloseOutline aria-label="Cancel Edit" /></button>
                 <input 
                     type="text"
+                    className={errorFields.includes('title') ? 'error' : ''}
                     onChange={(e) => setTitle(e.target.value)}
                     value={title}
                     placeholder="Add a title to your workout"
@@ -278,15 +287,16 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
                 <label htmlFor="duration"><strong>Duration (minutes)</strong></label>
                 <input 
                     id="duration"
+                    className={errorFields.includes('duration') ? 'error' : ''}
                     type="number"
                     onChange={(e) => setDuration(e.target.value)}
                     value={duration}
-                    min={0}
+                    min={1}
                     placeholder={60}
                 />
                 
                 <div className="exercises-table">
-                    <table>
+                    <table className={errorFields.includes('exercises') ? 'error' : ''}>
                         <thead>
                             <tr>
                                 <th>Exercise</th>
@@ -311,7 +321,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
                 
                 <span className="add-exercise" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</span>
                 
-                {error && <p>{error}</p>}
+                {error && <p className="error-message">{error}</p>}
                 
                 <div className="buttons-container">
                     <button className="delete-workout-button" onClick={handleConfirm}><IoTrashOutline /> Delete Workout</button>

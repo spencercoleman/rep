@@ -99,6 +99,15 @@ const StyledForm = styled.form`
         margin-left: auto;
         padding: var(--spacing-xs) var(--spacing-md);
     }
+
+    .error {
+        border: 1px solid var(--red);
+        transition: 0.2s ease-in;
+    }
+
+    .error-message {
+        color: var(--red);
+    }
 `;
 
 const WorkoutForm = ({ setShowForm }) => {
@@ -117,6 +126,7 @@ const WorkoutForm = ({ setShowForm }) => {
         }
     ]);
     const [error, setError] = useState(null);
+    const [errorFields, setErrorFields] = useState([]);
 
     const addExercise = () => {
         setExercises([...exercises, {
@@ -180,11 +190,13 @@ const WorkoutForm = ({ setShowForm }) => {
 
         if (!response.ok) {
             setError(json.error);
+            setErrorFields(json.errorFields);
         }
 
         if (response.ok) {
             setError(null);
             setShowForm(false);
+            setErrorFields([]);
             fetchWorkouts();
         }
     }
@@ -213,6 +225,7 @@ const WorkoutForm = ({ setShowForm }) => {
                 <StyledForm onSubmit={handleSubmit} role="form">
                     <input 
                         type="text"
+                        className={errorFields.includes('title') ? 'error' : ''}
                         onChange={(e) => setTitle(e.target.value)}
                         value={title}
                         placeholder="Add a title to your workout"
@@ -226,6 +239,7 @@ const WorkoutForm = ({ setShowForm }) => {
                     <label htmlFor="duration"><strong>Duration (minutes)</strong></label>
                     <input 
                         id="duration"
+                        className={errorFields.includes('duration') ? 'error' : ''}
                         type="number"
                         onChange={(e) => setDuration(e.target.value)}
                         value={duration}
@@ -233,7 +247,7 @@ const WorkoutForm = ({ setShowForm }) => {
                         placeholder={60}
                     />
                     <div className="exercises-table">
-                        <table>
+                        <table className={errorFields.includes('exercises') ? 'error' : ''}>
                             <thead>
                                 <tr>
                                     <th>Exercise</th>
@@ -256,7 +270,7 @@ const WorkoutForm = ({ setShowForm }) => {
                         </table>
                     </div>
                     <span className="add-exercise" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</span>
-                    {error && <p>{error}</p>}
+                    {error && <p className="error-message">{error}</p>}
                     <button className="submit-workout-button">Finish</button>
                 </StyledForm>
             </StyledCard>

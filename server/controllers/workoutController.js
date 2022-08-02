@@ -24,6 +24,23 @@ const getWorkout = async (req, res) => {
 
 const createWorkout = async (req, res) => {
     const { title, notes, duration, exercises, weights, reps, sets } = req.body;
+    const errorFields = [];
+
+    // Check for empty/invalid input
+    if (!title) {
+        errorFields.push('title');
+    }
+    if (!duration || duration < 0) {
+        errorFields.push('duration')
+    }
+    if (!exercises || exercises[0] === '') {
+        errorFields.push('exercises');
+    }
+
+    // Return error for invalid fields
+    if (errorFields.length > 0) {
+        return res.status(400).json({ error: 'Fill in all required fields.', errorFields});
+    }
 
     try {
         const workout = await Workout.create({title, notes, duration, exercises, weights, reps, sets});
@@ -36,6 +53,22 @@ const createWorkout = async (req, res) => {
 
 const updateWorkout = async (req, res) => {
     const {id} = req.params;
+    const { title, duration } = req.body;
+
+    const errorFields = [];
+
+    // Check for empty/invalid input
+    if (!title) {
+        errorFields.push('title');
+    }
+    if (!duration || duration < 0) {
+        errorFields.push('duration')
+    }
+
+    // Return error for invalid fields
+    if (errorFields.length > 0) {
+        return res.status(400).json({ error: 'Fill in all required fields.', errorFields});
+    }
     
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({error: 'Document not found'});

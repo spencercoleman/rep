@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { IoHomeOutline, IoBodyOutline, IoBarbellOutline } from 'react-icons/io5';
+import { IoHome, IoHomeOutline, IoBody, IoBodyOutline, IoBarbell, IoBarbellOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
 import { useEffect } from "react";
 
@@ -40,7 +40,7 @@ const StyledNav = styled.nav`
     }
 
     .active {
-        text-decoration: underline;
+        text-decoration: none;
     }
 
     .icon {
@@ -73,13 +73,13 @@ const Navbar = ({ showForm, setShowForm }) => {
         <StyledNav>
             <ul>
                 <li>
-                    <NavLink to="/"><IoHomeOutline className="icon" />Home</NavLink>
+                    <NavLink to="/" children={({ isActive }) => isActive ? <><IoHome className="icon" /> Home</> : <><IoHomeOutline className="icon" /> Home</>} />
                 </li>
                 <li>
-                    <NavLink to="/workouts"><IoBodyOutline className="icon" />Workouts</NavLink>
+                    <NavLink to="/workouts" children={({ isActive }) => isActive ? <><IoBody className="icon" /> Workouts</> : <><IoBodyOutline className="icon" /> Workouts</>} />
                 </li>
                 <li>
-                    <NavLink to="/exercises"><IoBarbellOutline className="icon" />Exercises</NavLink>
+                    <NavLink to="/exercises" children={({ isActive }) => isActive ? <><IoBarbell className="icon" /> Exercises</> : <><IoBarbellOutline className="icon" /> Exercises</>} />
                 </li>
             </ul>
         </StyledNav>

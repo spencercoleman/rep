@@ -1,59 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
-import { IoAddOutline } from 'react-icons/io5';
+import { IoCloseOutline, IoAddOutline, IoTrashOutline } from 'react-icons/io5';
 import styled from 'styled-components/macro';
 import ExerciseInputs from './ExerciseInputs';
 import { useExercisesContext } from '../hooks/useExercisesContext';
 
-const StyledFormContainer = styled.div`
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9;
-    padding-bottom: var(--spacing-xxxl);
-
-    #duration {
-        max-width: 100px;
-    }
-
-    .card-container {
-        margin: var(--spacing-md);
-        width: 100%;
-        z-index: 11;
-
-        @media (min-width: 768px) {
-            width: auto;
-        }
-    }
-
-    .form-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: var(--spacing-xs);
-        
-        h2 {
-            margin-right: auto;
-        }
-    }
-
-    .close-button {
-        padding: 0;
-        background: none;
-        color: var(--darkgrey);
-        display: flex;
-        align-items: center;
-
-        svg {
-            font-size: var(--font-size-lg);
-        }
-    }
-`;
-
 const StyledForm = styled.form`
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
@@ -96,8 +49,33 @@ const StyledForm = styled.form`
 
     .buttons-container {
         display: flex;
-        justify-content: flex-end;
+        flex-wrap: wrap;
         gap: var(--spacing-xs);
+
+        @media (min-width: 768px) {
+            justify-content: flex-end;
+        }
+    }
+
+    .buttons-container-inner {
+        display: flex;
+        gap: var(--spacing-xs);
+    }
+
+    .delete-workout-button, .submit-workout-button {
+        padding: var(--spacing-xs) var(--spacing-md);
+    }
+
+    .delete-workout-button {
+        background-color: var(--red);
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        
+        &:hover {
+            background-color: var(--darkred);
+        }
     }
 
     .cancel-button {
@@ -107,13 +85,36 @@ const StyledForm = styled.form`
         border: 2px solid var(--black);
         border-radius: var(--border-radius-subtle);
         padding: 0.2rem var(--spacing-sm);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
+
+        &:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
     }
 
-    .submit-workout-button {
-        padding: var(--spacing-xs) var(--spacing-md);
+    .cancel-icon {
+        background: none;
+        padding: 0;
+        font-size: 1.7rem;
+        color: var(--black);
+        margin-left: auto;
+    }
+
+    .confirm-modal {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-md);
+        background-color: #fff;
+        text-align: center;
+
+        em {
+            margin-bottom: var(--spacing-md);
+        }
     }
 `;
 
@@ -125,6 +126,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
     const [duration, setDuration] = useState(workout.duration);
     const [exercises, setExercises] = useState(null);
     const [error, setError] = useState(null);
+    const [isConfirming, setIsConfirming] = useState(false);
 
     const addExercise = () => {
         setExercises([...exercises, {
@@ -134,6 +136,11 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
             sets: 0,
             reps: 0
         }]);
+    }
+
+    const deleteExercise = (exerciseIndex) => {
+        const updatedExercises = exercises.filter(elem => (elem.index !== exerciseIndex));
+        setExercises(updatedExercises);
     }
 
     const updateExercises = (exercise) => {
@@ -180,9 +187,43 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
         return exerciseData;
     }
 
+    const handleConfirm = (e) => {
+        e.preventDefault();
+        setIsConfirming(!isConfirming);
+    }
+    
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setIsEditing(false);
+    }
+
+    const handleDelete = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch(`/api/workouts/${workout._id}`, {
+            method: 'DELETE',
+            body: JSON.stringify(workout),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const json = await response.json();
+
+        if (!response.ok) {
+            setError(json.error);
+        }
+
+        if (response.ok) {
+            setError(null);
+            setIsEditing(false);
+            setIsConfirming(false);
+            fetchWorkouts();
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         const {exerciseIds, weights, sets, reps} = parseExercises();
         const updatedWorkout = {
             title,
@@ -214,11 +255,6 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
         }
     }
 
-    const deleteExercise = (exerciseIndex) => {
-        const updatedExercises = exercises.filter(elem => (elem.index !== exerciseIndex));
-        setExercises(updatedExercises);
-    }
-
     useEffect(() => {
         setExercises(getExerciseData());
     }, [])
@@ -226,6 +262,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
     return (
         <>
             <StyledForm onSubmit={handleSubmit} role="form">
+                <button className="cancel-icon" onClick={handleCancel}><IoCloseOutline aria-label="Cancel Edit" /></button>
                 <input 
                     type="text"
                     onChange={(e) => setTitle(e.target.value)}
@@ -247,6 +284,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
                     min={0}
                     placeholder={60}
                 />
+                
                 <div className="exercises-table">
                     <table>
                         <thead>
@@ -270,12 +308,29 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
                         </tbody>
                     </table>
                 </div>
+                
                 <span className="add-exercise" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</span>
+                
                 {error && <p>{error}</p>}
+                
                 <div className="buttons-container">
-                    <span className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</span>
-                    <button className="submit-workout-button">Finish</button>
+                    <button className="delete-workout-button" onClick={handleConfirm}><IoTrashOutline /> Delete Workout</button>
+                    <div className="buttons-container-inner">
+                        <button className="cancel-button" onClick={handleCancel}>Cancel</button>
+                        <button className="submit-workout-button">Save Changes</button>
+                    </div>
                 </div>
+                
+                {isConfirming && (
+                    <div className="confirm-modal">
+                        <strong>Are you sure you want to delete this workout?</strong>
+                        <em>This action cannot be undone.</em>
+                        <div className="buttons-container">
+                            <button className="cancel-button" onClick={handleConfirm}>Cancel</button>
+                            <button className="delete-workout-button" onClick={handleDelete}>Delete</button>
+                        </div>
+                    </div>
+                )}
             </StyledForm>
         </>
     );

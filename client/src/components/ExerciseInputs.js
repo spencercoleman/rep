@@ -83,7 +83,7 @@ const ExerciseInputs = ({ exerciseList, exercise, updateExercises, deleteExercis
                     </td>
                     {exercise.index !== 0 && (
                         <td className="delete-icon">
-                            <IoCloseOutline onClick={() => handleDelete()} />
+                            <IoCloseOutline aria-label="Delete Exercise" onClick={() => handleDelete()} />
                         </td>
                     )}
                 </StyledInputsRow>

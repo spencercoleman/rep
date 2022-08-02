@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { IoTimeOutline } from 'react-icons/io5';
+import { IoTimeOutline, IoCreateOutline } from 'react-icons/io5';
 import styled from "styled-components/macro";
 import StyledCard from "../styles/StyledCard";
 import EditWorkoutForm from './EditWorkoutForm';
@@ -11,12 +11,13 @@ const StyledDetails = styled.li`
     }
 
     p {
-        margin-bottom: var(--spacing-sm);
+        margin: var(--spacing-sm) 0;
     }
 
     .workout-header {
         display: flex;
         flex-wrap: wrap;
+        align-items: flex-end;
         gap: var(--spacing-sm);
     }
 
@@ -34,6 +35,7 @@ const StyledDetails = styled.li`
         align-items: center;
         gap: 0.2rem;
         font-weight: 700;
+        
         svg {
             font-size: 1.1rem;
         }
@@ -63,6 +65,13 @@ const StyledDetails = styled.li`
         @media (min-width: 445px) {
             table-layout: fixed;
         }
+    }
+
+    .edit-button {
+        padding: 0;
+        background-color: transparent;
+        color: var(--darkgrey);
+        font-size: 1.5rem;
     }
 `;
 
@@ -94,18 +103,16 @@ const WorkoutDetails = ({ workout }) => {
                 {isEditing ? (
                     <>
                         <EditWorkoutForm workout={workout} setIsEditing={setIsEditing} />
+
                     </>
                 ) : (
                     <>
                         <div className="workout-header">
                             <strong className="workout-title">{workout.title}</strong>
-                            <span className="workout-date">{new Date(workout.createdAt).toLocaleString()}</span>
+                            <button className="edit-button" onClick={() => setIsEditing(!isEditing)}><IoCreateOutline aria-label="Edit Workout" /></button>
                         </div>
                         
-                        <div>
-                            <button onClick={() => setIsEditing(!isEditing)}>Edit</button>
-                        </div>
-
+                        <div className="workout-date">{new Date(workout.createdAt).toLocaleString()}</div>
                         <div className="workout-duration"><IoTimeOutline />{parseDurationToHoursAndMinutes(workout.duration)}</div>
 
                         {workout.notes && workout.notes.length > 0 && <p>{workout.notes}</p>}

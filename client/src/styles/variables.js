@@ -10,6 +10,8 @@ const variables = css`
         --darkgrey: #312f36;
         --green: #00855B;
         --lightgrey: #f8f8f8;
+        --darkred: #9A3737;
+        --red: #BD4747;
         --white: #fff;
 
         --font-sans: 'Lato', sans-serif;

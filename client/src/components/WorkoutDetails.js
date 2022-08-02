@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoTimeOutline, IoCreateOutline } from 'react-icons/io5';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import styled from "styled-components/macro";
 import StyledCard from "../styles/StyledCard";
 import EditWorkoutForm from './EditWorkoutForm';
@@ -112,7 +113,7 @@ const WorkoutDetails = ({ workout }) => {
                             <button className="edit-button" onClick={() => setIsEditing(!isEditing)}><IoCreateOutline aria-label="Edit Workout" /></button>
                         </div>
                         
-                        <div className="workout-date">{new Date(workout.createdAt).toLocaleString()}</div>
+                        <div className="workout-date">{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</div>
                         <div className="workout-duration"><IoTimeOutline />{parseDurationToHoursAndMinutes(workout.duration)}</div>
 
                         {workout.notes && workout.notes.length > 0 && <p>{workout.notes}</p>}

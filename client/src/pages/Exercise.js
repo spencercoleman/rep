@@ -16,7 +16,7 @@ const Exercise = () => {
             }
         }
         fetchExercises();
-    }, []);
+    }, [id]);
 
     return (
         <>

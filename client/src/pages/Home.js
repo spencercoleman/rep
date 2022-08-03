@@ -3,7 +3,7 @@ import Section from '../components/Section';
 import ActivityChart from "../components/ActivityChart";
 import WorkoutsList from "../components/WorkoutsList";
 
-const Home = () => {
+const Home = ({ setShowForm }) => {
     const { workouts } = useWorkoutsContext();
 
     return (
@@ -16,9 +16,9 @@ const Home = () => {
            
 
             { workouts && (
-            <Section title="Your Workouts" viewAllLink="/workouts">
-                <WorkoutsList workouts={workouts.slice(0, 3)} />
-            </Section>
+                <Section title="Your Workouts" viewAllLink="/workouts">
+                    <WorkoutsList workouts={workouts.slice(0, 3)} setShowForm={setShowForm} />
+                </Section>
             )}
         </>
     );

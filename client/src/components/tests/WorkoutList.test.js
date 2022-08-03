@@ -2,21 +2,15 @@ import React from "react";
 import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from 'react-router-dom'; 
 import "@testing-library/jest-dom";
+import { ExercisesProvider } from "../../context/ExercisesContext";
 import WorkoutsList from '../WorkoutsList';
 
 const seedWorkouts = [{
     _id: 'workoutOne',
     title: 'Punch Training',
-    exercises: [{
-        _id: 'ex0',
-        name:  'Pushup',
-    }, {
-        _id: 'ex1',
-        name: 'Situp'
-    }, {
-        _id: 'ex2',
-        name: 'Air Squat'
-    }],
+    createdAt: '2022-07-28T07:13:10.146+00:00',
+    duration: 75,
+    exercises: ['ex0', 'ex1', 'ex2'],
     notes: 'Added 10-km run at the end',
     weights: [100, 123, 135],
     sets: [10, 10, 10],
@@ -24,10 +18,9 @@ const seedWorkouts = [{
 }, {
     _id: 'workoutTwo',
     title: 'Running up that hill',
-    exercises: [{
-        _id: 'ex3', 
-        name: 'Running'
-    }],
+    createdAt: '2022-08-02T03:28:18.741+00:00',
+    duration: 60,
+    exercises: ['ex3'],
     weights: [1],
     sets: [2],
     reps: [3],
@@ -35,9 +28,12 @@ const seedWorkouts = [{
 
 const Wrapper = ({ children }) => {
     return (
-        <MemoryRouter>
-            {children}
-        </MemoryRouter>
+        <ExercisesProvider>
+            <MemoryRouter>
+                {children}
+            </MemoryRouter>
+        </ExercisesProvider>
+
     );
 }
 

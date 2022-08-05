@@ -32,13 +32,7 @@ const StyledExerciseTable = styled.table`
     }
 `;
 
-const StyledName = styled.span`
-    background-color: ${props => props.force === 'Push' ? 'var(--blue)' : 'var(--green)'};
-    color: var(--white);
-    font-weight: 700;
-    padding: var(--spacing-xxs) var(--spacing-xs);
-    border-radius: var(--border-radius-subtle);
-`;
+
 
 const ExercisesTable = ({ exercises }) => {
     const navigate = useNavigate();
@@ -58,7 +52,7 @@ const ExercisesTable = ({ exercises }) => {
                         {exercises.map(exercise => (
                             <tr key={exercise._id} className="exercise-item" onClick={() => navigate(`/exercises/${exercise._id}`)}>
                                 <td>
-                                    <StyledName force={exercise.force}>{exercise.name}</StyledName>
+                                    {exercise.name}
                                 </td>
                                 <td>
                                     {exercise.force}

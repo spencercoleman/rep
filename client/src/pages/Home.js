@@ -2,23 +2,26 @@ import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import Section from '../components/Section';
 import ActivityChart from "../components/ActivityChart";
 import WorkoutsList from "../components/WorkoutsList";
+import Loader from "../components/Loader";
 
 const Home = ({ setShowForm }) => {
     const { workouts } = useWorkoutsContext();
 
     return (
-        <>
-            <h1>Dashboard</h1>
-            <Section title="Recent Activity">
-                {/* TODO: Add Activity chart */}
-                <ActivityChart workouts={workouts} />
-            </Section>
-           
+        <> 
+            { workouts ? (
+                <>
+                    <h1>Dashboard</h1>
+                    <Section title="Recent Activity">
+                        <ActivityChart workouts={workouts} />
+                    </Section>
 
-            { workouts && (
-                <Section title="Your Workouts" viewAllLink="/workouts">
-                    <WorkoutsList workouts={workouts.slice(0, 3)} setShowForm={setShowForm} />
-                </Section>
+                    <Section title="Your Workouts" viewAllLink="/workouts">
+                        <WorkoutsList workouts={workouts.slice(0, 3)} setShowForm={setShowForm} />
+                    </Section>
+                </>
+            ) : (
+                <Loader />
             )}
         </>
     );

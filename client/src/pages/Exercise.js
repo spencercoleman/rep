@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ExerciseDetails from "../components/ExerciseDetails";
+import Loader from '../components/Loader';
 import Section from "../components/Section";
 
 const Exercise = () => {
@@ -20,13 +21,15 @@ const Exercise = () => {
 
     return (
         <>
-            {exercise && (
+            {exercise ? (
                 <>
                     <h1>{exercise.name}</h1>
                     <Section>
                         <ExerciseDetails exercise={exercise} />
                     </Section>
                 </>
+            ) : (
+                <Loader />
             )}
         </>
     );

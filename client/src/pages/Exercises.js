@@ -5,6 +5,7 @@ import styled from "styled-components/macro";
 import Section from "../components/Section"
 import ExercisesTable from "../components/ExercisesTable"
 import StyledCard from '../styles/StyledCard';
+import Loader from "../components/Loader";
 
 const StlyedFilters = styled.div`
     display: flex;
@@ -68,30 +69,36 @@ const Exercises = () => {
 
     return (
         <>
-            <h1>Exercises</h1>
-            <Section title="All Exercises">
-                <StlyedFilters>
-                    <input type="text" onChange={(e) => setFilterTerm(e.target.value)} value={filterTerm} placeholder="Search for an exercise..." />
-                    
-                    <select id="force" value={filterForce} onChange={(e) => setFilterForce(e.target.value)}>
-                        <option value="" disabled>Force</option>
-                        {forces.map(force => <option key={force} value={force}>{force}</option>)}
-                    </select>
-                    
-                    <select id="type" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-                        <option value="" disabled>Type</option>
-                        {types.map(type => <option key={type} value={type}>{type}</option>)}                        
-                    </select>
-                    
-                    {(filterTerm.length > 0 || filterForce.length > 0 || filterType.length > 0) && (
-                        <button className="reset-button" onClick={handleReset}><IoClose /> Reset Filters</button>
-                    )}
-                </StlyedFilters>
+            { exerciseList ? (
+                <>
+                    <h1>Exercises</h1>
+                    <Section title="All Exercises">
+                        <StlyedFilters>
+                            <input type="text" onChange={(e) => setFilterTerm(e.target.value)} value={filterTerm} placeholder="Search for an exercise..." />
+                            
+                            <select id="force" value={filterForce} onChange={(e) => setFilterForce(e.target.value)}>
+                                <option value="" disabled>Force</option>
+                                {forces.map(force => <option key={force} value={force}>{force}</option>)}
+                            </select>
+                            
+                            <select id="type" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+                                <option value="" disabled>Type</option>
+                                {types.map(type => <option key={type} value={type}>{type}</option>)}                        
+                            </select>
+                            
+                            {(filterTerm.length > 0 || filterForce.length > 0 || filterType.length > 0) && (
+                                <button className="reset-button" onClick={handleReset}><IoClose /> Reset Filters</button>
+                            )}
+                        </StlyedFilters>
 
-                <StyledCard>
-                    <ExercisesTable exercises={filteredExercises} />
-                </StyledCard>
-            </Section>
+                        <StyledCard>
+                            <ExercisesTable exercises={filteredExercises} />
+                        </StyledCard>
+                    </Section>
+                </>
+            ) : (
+                <Loader />
+            )}
         </>
     )
 }

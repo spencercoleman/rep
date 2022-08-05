@@ -8,7 +8,7 @@ const StyledExerciseTable = styled.table`
     padding-bottom: var(--spacing-xs);
     table-layout: auto;
 
-    @media (min-width: 445px) {
+    @media (min-width: 870px) {
         table-layout: fixed;
     }
 

@@ -54,17 +54,27 @@ const StyledDetails = styled.li`
 
         th {
             padding-bottom: var(--spacing-xs);
+            text-align: center;
+
+            &:first-child {
+                text-align: left;
+            }
         }
 
         td {
             white-space: nowrap;
+            text-align: center;
+
+            &:first-of-type {
+                text-align: left;
+            }
 
             a:hover {
                 text-decoration: none;
             }
         }
 
-        @media (min-width: 445px) {
+        @media (min-width: 945px) {
             table-layout: fixed;
         }
     }

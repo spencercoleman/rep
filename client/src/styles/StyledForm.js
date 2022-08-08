@@ -25,6 +25,10 @@ const StyledForm = styled.form`
         margin: var(--spacing-md) auto;
         padding: var(--spacing-sm) var(--spacing-lg);
     }
+
+    .error {
+        color: var(--red);
+    }
 `;
 
 export default StyledForm;

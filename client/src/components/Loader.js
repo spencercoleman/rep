@@ -5,6 +5,7 @@ const StyledLoader = styled.div`
     align-items: center;
     justify-content: center;
     height: 80vh;
+    width: 100vw;
 
     .lds-dual-ring {
         display: inline-block;

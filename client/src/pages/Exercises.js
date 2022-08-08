@@ -70,7 +70,7 @@ const Exercises = () => {
     return (
         <>
             { exerciseList ? (
-                <>
+                <main>
                     <h1>Exercises</h1>
                     <Section title="All Exercises">
                         <StlyedFilters>
@@ -95,7 +95,7 @@ const Exercises = () => {
                             <ExercisesTable exercises={filteredExercises} />
                         </StyledCard>
                     </Section>
-                </>
+                </main>
             ) : (
                 <Loader />
             )}

@@ -22,12 +22,12 @@ const Exercise = () => {
     return (
         <>
             {exercise ? (
-                <>
+                <main>
                     <h1>{exercise.name}</h1>
                     <Section>
                         <ExerciseDetails exercise={exercise} />
                     </Section>
-                </>
+                </main>
             ) : (
                 <Loader />
             )}

@@ -10,7 +10,7 @@ const Home = ({ setShowForm }) => {
     return (
         <> 
             { workouts ? (
-                <>
+                <main>
                     <h1>Dashboard</h1>
                     <Section title="Recent Activity">
                         <ActivityChart workouts={workouts} />
@@ -19,7 +19,7 @@ const Home = ({ setShowForm }) => {
                     <Section title="Your Workouts" viewAllLink="/workouts">
                         <WorkoutsList workouts={workouts.slice(0, 3)} setShowForm={setShowForm} />
                     </Section>
-                </>
+                </main>
             ) : (
                 <Loader />
             )}

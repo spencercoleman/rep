@@ -1,9 +1,11 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { IoHome, IoHomeOutline, IoBody, IoBodyOutline, IoBarbell, IoBarbellOutline } from 'react-icons/io5';
-import styled from "styled-components/macro";
 import { useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { IoHome, IoHomeOutline, IoBody, IoBodyOutline, IoBarbell, IoBarbellOutline, IoLogOutOutline } from 'react-icons/io5';
+import { useLogout } from "../hooks/useLogout";
+import styled from "styled-components/macro";
 
 const StyledNav = styled.nav`
+    display: flex;
     background-color: var(--black);
     color: var(--white);
     text-align: center;
@@ -16,7 +18,7 @@ const StyledNav = styled.nav`
     font-size: var(--font-size-sm);
 
     @media (min-width: 768px) {
-        padding: var(--spacing-xxl) var(--spacing-md);
+        padding: var(--spacing-xl) var(--spacing-md);
         box-shadow: none;
         position: relative;
         width: auto;
@@ -26,6 +28,7 @@ const StyledNav = styled.nav`
     ul {
         display: flex;
         justify-content: space-between;
+        width: 100%;
 
         @media (min-width: 768px) {
             flex-direction: column;
@@ -53,15 +56,32 @@ const StyledNav = styled.nav`
         }
     }
 
-    .add-workout-button {
+    .logout {
         display: flex;
         flex-direction: column;
-        cursor: pointer;
+        padding: 0;
+        font-size: var(--font-size-sm);
+        font-weight: normal;
+        margin: 0;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 768px) {
+            margin: auto;
+            margin-bottom: 0;
+        }
     }
 `;
 
 const Navbar = ({ setShowForm }) => {
     let location = useLocation();
+    const {logout} = useLogout();
+
+    const handleLogout = () => {
+        logout();
+    }
 
     useEffect(() => {
         setShowForm(false);
@@ -79,7 +99,12 @@ const Navbar = ({ setShowForm }) => {
                 <li>
                     <NavLink to="/exercises" children={({ isActive }) => isActive ? <><IoBarbell className="icon" /> Exercises</> : <><IoBarbellOutline className="icon" /> Exercises</>} />
                 </li>
+                <button className="logout" onClick={handleLogout}>
+                    <IoLogOutOutline className="icon"/>
+                    Logout
+                </button>
             </ul>
+
         </StyledNav>
     );
 }

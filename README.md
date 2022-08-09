@@ -2,13 +2,13 @@
     <h1 align="center">Reps</h1>
 </p> 
 <p align="center">
-  Create and manage workouts, track activity stats, and improve your form and fitness using a database of information on resistence exercises.
+  Create and manage workouts, track activity stats, and improve your form and fitness using a database of information on resistance exercises.
 </p>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/84942739/183560857-5bfd0684-d243-4b5d-b376-1bd725135c13.png" />
+  <img src="https://user-images.githubusercontent.com/84942739/183589238-43f266af-6017-4a5e-9851-dfc955424163.png" />
 </p>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/84942739/183560948-589dae56-8fb9-4967-bb92-345745bf93b5.png" />
+  <img src="https://user-images.githubusercontent.com/84942739/183589286-6b6ef52a-afc3-4328-b7e7-4cdafafedd4b.png" />
 </p>
 
 ## Set up MongoDB Atlas

@@ -88,8 +88,8 @@ const StyledDetails = styled.li`
 `;
 
 const StyledName = styled.span`
-    background-color: ${props => props.force === 'Push' ? 'var(--blue)' : 'var(--green)'};
-    color: var(--white);
+    background-color: ${props => props.force === 'Push' ? '#cce5ff' : '#d4edda'};
+    color: ${props => props.force === 'Push' ? '#004085' : '#155724'};
     font-weight: 700;
     padding: var(--spacing-xxs) var(--spacing-xs);
     border-radius: var(--border-radius-subtle);

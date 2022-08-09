@@ -219,7 +219,9 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
 
         const response = await fetch(`/api/workouts/${workout._id}`, {
             method: 'DELETE',
-            'Authorization': `Bearer ${user.token}`
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         });
         const json = await response.json();
 

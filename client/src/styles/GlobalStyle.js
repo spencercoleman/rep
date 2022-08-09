@@ -87,9 +87,15 @@ const GlobalStyle = createGlobalStyle`
         padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xxxl) var(--spacing-md);
         max-width: var(--site-max-width);
 
+
+
         @media (min-width: 768px) {
             padding: var(--spacing-xl) var(--spacing-lg);
+            padding-left: 110px;
             margin: 0 auto;
+        }
+
+        @media (min-width: 1240px) {
         }
     }
 

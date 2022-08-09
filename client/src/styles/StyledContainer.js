@@ -25,6 +25,24 @@ const StyledContainer = styled.div`
     .cta {
         margin: var(--spacing-lg) auto;
     }
+
+    .demo-login {
+        border: 2px solid var(--black);
+        border-radius: var(--border-radius-subtle);
+        font-weight: 700;
+        width: fit-content;
+        margin: auto;
+        padding: var(--spacing-xs) var(--spacing-md);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: var(--black);
+        text-align: center;
+
+        &:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+    }
 `;
 
 export default StyledContainer;

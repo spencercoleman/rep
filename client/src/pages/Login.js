@@ -17,6 +17,10 @@ const Login = () => {
         await login(email, password);
     }
 
+    const handleDemoLogin = async () => {
+        await login('demo@repsapp.com', 'repsdemopassword');
+    }
+
     return (
         <>
             {!isLoading ? (
@@ -34,6 +38,7 @@ const Login = () => {
                         {error && <p className="error">{error}</p>}
 
                         <button>Log In</button>
+                        <div className="demo-login" onClick={handleDemoLogin}>Try Demo</div>
                     </StyledForm>
                     <p className="cta">
                         New to Reps? <Link to="/signup">Sign up for an account</Link>.

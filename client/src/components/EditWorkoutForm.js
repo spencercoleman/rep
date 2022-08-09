@@ -136,7 +136,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
     const [title, setTitle] = useState(workout.title);
     const [notes, setNotes] = useState(workout.notes);
     const [duration, setDuration] = useState(workout.duration);
-    const [exercises, setExercises] = useState(null);
+    const [exercises, setExercises] = useState([]);
     const [error, setError] = useState(null);
     const [errorFields, setErrorFields] = useState([]);
     const [isConfirming, setIsConfirming] = useState(false);

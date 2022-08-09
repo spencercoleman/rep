@@ -33,7 +33,7 @@ const StyledNav = styled.nav`
         @media (min-width: 768px) {
             flex-direction: column;
             justify-content: flex-start;
-            gap: var(--spacing-xl);
+            gap: var(--spacing-xxl);
         }
     }
 

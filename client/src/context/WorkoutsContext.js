@@ -1,4 +1,5 @@
 import { createContext, useReducer, useEffect } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export const WorkoutsContext = createContext();
 
@@ -29,10 +30,15 @@ export const WorkoutsProvider = ({ children }) => {
     const [state, dispatch] = useReducer(workoutsReducer, {
         workouts: null
     });
+    const { user } = useAuthContext();
 
     useEffect(() => {
         const fetchWorkouts = async () => {
-            const response = await fetch('/api/workouts');
+            const response = await fetch('/api/workouts', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
             const data = await response.json();
     
             if (response.ok) {
@@ -40,8 +46,11 @@ export const WorkoutsProvider = ({ children }) => {
             }
         }
 
-        fetchWorkouts();
-    }, []);
+        if (user) {
+            fetchWorkouts();
+        }
+
+    }, [user]);
 
     return (
         <WorkoutsContext.Provider value={{...state, dispatch}}>

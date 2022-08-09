@@ -20,9 +20,9 @@ const StyledNav = styled.nav`
     @media (min-width: 768px) {
         padding: var(--spacing-xl) var(--spacing-md);
         box-shadow: none;
-        position: relative;
         width: auto;
         box-shadow: none;
+        height: 100%;
     }
 
     ul {

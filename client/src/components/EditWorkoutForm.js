@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { IoCloseOutline, IoAddOutline, IoTrashOutline } from 'react-icons/io5';
 import styled from 'styled-components/macro';
@@ -128,6 +129,7 @@ const StyledForm = styled.form`
 `;
 
 const EditWorkoutForm = ({ workout, setIsEditing }) => {
+    const { user } = useAuthContext();
     const { dispatch } = useWorkoutsContext();
     const { exerciseList } = useExercisesContext();
     const [title, setTitle] = useState(workout.title);
@@ -210,8 +212,14 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
     const handleDelete = async (e) => {
         e.preventDefault();
 
+        if (!user) {
+            setError('You must be logged in.');
+            return;
+        }
+
         const response = await fetch(`/api/workouts/${workout._id}`, {
             method: 'DELETE',
+            'Authorization': `Bearer ${user.token}`
         });
         const json = await response.json();
 
@@ -230,6 +238,11 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!user) {
+            setError('You must be logged in.');
+            return;
+        }
+
         const {exerciseIds, weights, sets, reps} = parseExercises();
         const updatedWorkout = {
             title,
@@ -245,7 +258,8 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
             method: 'PATCH',
             body: JSON.stringify(updatedWorkout),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
         const json = await response.json();

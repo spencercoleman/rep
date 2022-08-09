@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useExercisesContext } from '../hooks/useExercisesContext';
 import { IoAddOutline, IoCloseOutline } from 'react-icons/io5';
 import styled from 'styled-components/macro';
 import StyledCard from '../styles/StyledCard';
 import ExerciseInputs from './ExerciseInputs';
-import { useExercisesContext } from '../hooks/useExercisesContext';
 
 const StyledFormContainer = styled.div`
     position: fixed;
@@ -111,6 +112,7 @@ const StyledForm = styled.form`
 `;
 
 const WorkoutForm = ({ setShowForm }) => {
+    const { user } = useAuthContext();
     const { dispatch } = useWorkoutsContext();
     const { exerciseList } = useExercisesContext();
     const [title, setTitle] = useState('');
@@ -167,6 +169,11 @@ const WorkoutForm = ({ setShowForm }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!user) {
+            setError('You must be logged in.');
+            return;
+        }
         
         const {exerciseIds, weights, sets, reps} = parseExercises();
         const workout = {
@@ -183,7 +190,8 @@ const WorkoutForm = ({ setShowForm }) => {
             method: 'POST',
             body: JSON.stringify(workout),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
         const json = await response.json();

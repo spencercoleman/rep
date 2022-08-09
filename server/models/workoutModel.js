@@ -30,6 +30,10 @@ const workoutSchema = new Schema({
     }],
     notes: { 
         type: String
+    },
+    userId: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
  

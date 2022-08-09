@@ -42,6 +42,7 @@ const StyledForm = styled.form`
         align-items: center;
         font-weight: 700;
         cursor: pointer;
+        width: fit-content;
 
         svg {
             font-size: 1.2rem;
@@ -139,6 +140,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
     const [error, setError] = useState(null);
     const [errorFields, setErrorFields] = useState([]);
     const [isConfirming, setIsConfirming] = useState(false);
+    const MAX_EXERCISES = 8;
 
     const addExercise = () => {
         setExercises([...exercises, {
@@ -336,7 +338,7 @@ const EditWorkoutForm = ({ workout, setIsEditing }) => {
                     </table>
                 </div>
                 
-                <span className="add-exercise" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</span>
+                {exercises.length < MAX_EXERCISES && <span className="add-exercise" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</span>}
                 
                 {error && <p className="error-message">{error}</p>}
                 

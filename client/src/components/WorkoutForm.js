@@ -90,6 +90,7 @@ const StyledForm = styled.form`
         align-items: center;
         font-weight: 700;
         cursor: pointer;
+        width: fit-content;
 
         svg {
             font-size: 1.2rem;
@@ -129,6 +130,7 @@ const WorkoutForm = ({ setShowForm }) => {
     ]);
     const [error, setError] = useState(null);
     const [errorFields, setErrorFields] = useState([]);
+    const MAX_EXERCISES = 8;
 
     const addExercise = () => {
         setExercises([...exercises, {
@@ -277,7 +279,9 @@ const WorkoutForm = ({ setShowForm }) => {
                             </tbody>
                         </table>
                     </div>
-                    <span className="add-exercise" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</span>
+
+                    {exercises.length < MAX_EXERCISES && <span className="add-exercise" onClick={() => addExercise()}><IoAddOutline /> Add an Exercise</span>}
+
                     {error && <p className="error-message">{error}</p>}
                     <button className="submit-workout-button">Finish</button>
                 </StyledForm>

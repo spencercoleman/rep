@@ -1,5 +1,7 @@
 <p align="center">
-    <h1 align="center">Reps</h1>
+    <a href="https://reps-app-v1.herokuapp.com/">
+        <h1 align="center">Reps</h1>
+    </a>
 </p> 
 <p align="center">
   Create and manage workouts, track activity stats, and improve your form and fitness using a database of information on resistance exercises.
@@ -30,9 +32,8 @@ touch .env
 DB_URI=
 ```
 
-3. Add a PORT variable and a SECRET variable to the `.env` file as well. The PORT variable will determine the server port. The SECRET variable is a random string used to sign and verify JSON web tokens.
+3. Add a SECRET variable to the `.env` file as well. This variable should be a random string that will be used to sign and verify JSON web tokens.
 ```env
-PORT=
 SECRET=
 ```
 

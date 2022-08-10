@@ -5,6 +5,7 @@ import GlobalStyle from "./styles/GlobalStyle";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import MainLayoutRoutes from "./layouts/MainLayoutRoutes";
+import ScrollToTop from "./layouts/ScrollToTop";
 
 function App() {
   const {user} = useAuthContext();
@@ -14,6 +15,7 @@ function App() {
     <>
       <GlobalStyle />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route 
             path="/signup" 

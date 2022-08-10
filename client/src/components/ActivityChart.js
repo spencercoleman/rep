@@ -46,7 +46,7 @@ const ActivityChart = ({ workouts }) => {
     return (
         <StyledCard>
             {activityData && (
-                <ResponsiveContainer width={'99%'} height={400}>
+                <ResponsiveContainer width={'99%'} height={300}>
                     <BarChart
                         data={activityData}
                     >
